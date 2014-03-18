@@ -14,22 +14,26 @@ package
 		public var playerName:String
 		public var main:Main
 		public var health:Number 
-		public var startHealth:Number 
-		public var acc:Number = 6
-		public var jumpPower:Number = 30
-		public var gravity:Number = 2
+		public var startHealth:Number	
+	
 		public var isJumping:Boolean = false
 		public var vx:Number = 0
 		public var vy:Number = 0
+		
+		//TODO: 5) skrew around with the speeed and stuff
+		public var acc:Number = 6
 		public var friction:Number = 3
 		public var maxSpeed:Number = 10
+		public var jumpPower:Number = 30
+		public var gravity:Number = 2
+		
 		public var frameSet:FrameSet
 		public var touchingFloor:Boolean =false
 		public var state:String ="stop"
 		public var currentFrame:int = 1
 		public var AField:AttackField
-		public var RED_COLOR:ColorTransform = new ColorTransform(1,1,1,1,100)
-		public var DEFUALT:ColorTransform = new ColorTransform()
+		public static var RED_COLOR:ColorTransform = new ColorTransform(1,1,1,1,100)
+		public static var DEFUALT:ColorTransform = new ColorTransform()
 		public var oWidth:Number
 		public var oHeight:Number
 		public function Player(name:String, graphicClass:Class,frameSetClass:Class, startHealth:Number = 100):void {
@@ -77,6 +81,9 @@ package
 			}
 			//trace(this.state)
 		}
+		 //TODO: 6C) Make a new function called taunt().
+		//				Inside it you will need to write: this.state = "taunting"; this.currentFrame = frameSet.tauntStartFrame;
+		
 		public function flipHorz(dir:Number = -1) {	
 			if(dir == -1){
 				g.scaleX = -1
@@ -89,7 +96,7 @@ package
 		
 		public function containsRectangle(r:Rectangle):Boolean {
 			var rect:Rectangle = getBounds(main.stage)
-			trace("SDFSD")
+			//trace("SDFSD")
 			if (rect.left > r.right) {
 				return false	
 			}

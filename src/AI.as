@@ -17,7 +17,7 @@ package
 		public var difficulty:String
 		public function AI(target:Player, name:String, graphicClass:Class,frameSetClass:Class, startHealth:Number = 100) 
 		{
-			super(name, graphicClass,frameSetClass)
+			super(name, graphicClass,frameSetClass, startHealth)
 			this.target = target
 			setDifficulty(EASY)
 		}
@@ -39,6 +39,7 @@ package
 			
 		}
 		public function setDifficulty(d:String):void {
+			//TODO: 4)  Skrew around with the difficulty of the AI
 			if (d == EASY) {
 				attackChance = .05
 				jumpChance = .025
@@ -47,7 +48,7 @@ package
 			if (d == MEDIUM) {
 				attackChance = .2
 				jumpChance = .075
-				chageDirChance= .0075
+				chageDirChance= .01
 			}
 			if (d == HARD) {
 				attackChance = .4

@@ -13,6 +13,7 @@ package
 		 public var attackStartFrame:int = 26
 		 public var attackStopFrame:int = 32
 		 public var diveKickFrame:int = 33
+		 //TODO: 6B) Add two more variables: tauntStartFrame and tauntStopFrame and make them equal to the frames that your animation starts and begins
 		
 	}
 

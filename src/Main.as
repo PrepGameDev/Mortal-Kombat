@@ -16,7 +16,7 @@ package
 		//TODO: 1)  Change how the characters look in Flash Pro.  Be sure to remember to repackage them (CTRL+ENTER)
 		//			-Note: Characters have multiple frames. Check the timeline.
 		//TODO: 2A)  Draw a background in FLash Pro. Export it for actionscript and be sure to remember to package it (CTRL+ENTER)
-		
+		//TODO: 6A) Create a taunt action. Fist draw your taunt animation at the end of the timeline for your character.  Be sure to remember to package it (CTRL+ENTER)
 		
 		public var backgroundCanvas:Sprite = new Sprite
 		public var playerCanvas:Sprite = new Sprite
@@ -48,9 +48,11 @@ package
 			while(players.length != 0){
 				removePlayer(players[0])
 			}
-			player1 = new Player("player1", BlondePlayer, FrameSet)
-			//player2 = new Player("player2", RedPlayer , FrameSet)
-			player2 = new AI(player1,"player2", RedPlayer , FrameSet)
+			//TODO: 7)Change the starting health... its the last parameter in the Player constructor
+			player1 = new Player("player1", BlondePlayer, FrameSet, 100)
+			//TODO: 9A)	Make player2 another person
+			//			First make player2 a Player like player1 instead of an AI
+			player2 = new AI(player1,"player2", RedPlayer , FrameSet,100)
 			player2.flipHorz()
 			player2.x = 500//stage.stageWidth+20
 			addPlayer(player1)
@@ -70,6 +72,12 @@ package
 			GUI_Canvas.addChild(eT)
 			eT.text = "Press Enter to Reset. 1,2,3 to change difficulty"
 			eT.width = 400
+			
+			//TODO: 8)	Make some textFields to go above the health bars to denote which bar belongs to which player (i.e player1, player2)
+			//			There are two ways to go about this, either define the text fields locally like eT above, or create public variables
+			//			to store them so you can change them dynamically
+			//			You are going to have to do some guess work to get them centered where you want them (remember in flash the origin
+			//			is in the top left corner. Larger Y's put objects lower on the screen)
 			
 			difficultyText = new TextField
 			GUI_Canvas.addChild(difficultyText)
@@ -130,6 +138,13 @@ package
 			
 			
 			//trace(player1.state)
+			//TODO: 9C) Now make whatever keys you want to correspond to left and right keys for the second player (perhaps 4 and 6
+			//			on the numpad).You are going to need to duplicate this whole else-if-else clause below and change the keys and player.
+			//			If you don't know the ASCII code forthe key you want to use just press it and check what
+			//			it traces out. Otherwise you can consult the internet.
+			//			If you did everything correctly you should be able to play 1v1 with your friends on the same keyboard
+			
+			
 			if (keyIsPressed(65)) {
 				player1.move( -1)
 				
@@ -155,7 +170,7 @@ package
 					AI(p).think()
 				}
 				
-				p.g.transform.colorTransform =p.DEFUALT
+				p.g.transform.colorTransform =Player.DEFUALT
 				
 				p.vy += p.gravity
 				p.x += p.vx
@@ -199,7 +214,7 @@ package
 					if (field.master != p) {
 						if(p.containsRectangle(field.rect)){
 							p.health -= field.dmg
-							p.g.transform.colorTransform = p.RED_COLOR
+							p.g.transform.colorTransform = Player.RED_COLOR
 							attackFields.splice(j, 1)
 							j--
 							trace("RED")
@@ -238,16 +253,18 @@ package
 						var index:int = attackFields.indexOf(p.AField)
 						if(index != -1) attackFields.splice(index, 1)
 					}
-					
-					
 				}
+				 //TODO: 6D) append  else if(p.state == "taunting"){ to the end of the block above
+				 //			inside the new block we will need almost the same code as for the "attacking" block
+				 //			the only difference is that we will be comparing p.current frame to p.frameSet.tauntStopFrame in the if satement
+				
 				p.g.gotoAndStop(p.currentFrame)
 			}
 			
 		
 			p1Health.scaleX = player1.health/player1.startHealth
 			p2Health.scaleX = player2.health / player2.startHealth
-			
+			//trace(player1.health, player2.health)
 			//trace(player1.vx)
 		}
 		public function keyIsPressed(n:int):Boolean {
@@ -258,6 +275,7 @@ package
 		}
 		public function keyDown(e:KeyboardEvent):void {
 			trace(e.keyCode)
+			 
 			
 			if (!keyIsPressed(13) && e.keyCode == 13) {
 				reset()
@@ -281,12 +299,17 @@ package
 				}
 			}
 			
+			//TODO: 6E) Now pick your favorite key and make it call your new taunt() function. If you don't know the ASCII code for
+			//			the key you want to use just press it and check what it traces out. Otherwise you can consult the internet.
 			if (!keyIsPressed(87) && e.keyCode == 87) {
 				player1.jump()
 			}
 			if (!keyIsPressed(32) && e.keyCode == 32) {
 				player1.attack()
 			}
+			//TODO: 9B) Now make whatever keys you want to correspond to jump and attack keys for the second player (perhaps 8 and 0
+			//			on the numpad).If you don't know the ASCII code for	the key you want to use just press it and check what
+			//			it traces out. Otherwise you can consult the internet.
 			isDown[e.keyCode] = true
 		}
 		public function keyUp(e:KeyboardEvent):void {
